@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+        <div>[[${board.getBtitle}]]</div>
+        <div>[[${board.getBcontent}]]</div>
+        <td><a th:href=" @{/delete/{bno}(bno=${board.getBno})}">삭제</a></td>
+        <div><a href="/update">수정</a></div>
+
+</body>
+</html>

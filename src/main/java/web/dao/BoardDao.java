@@ -60,6 +60,48 @@ public class BoardDao{
         return null;
     }
 
+
+    public BoardDto board( int bno ) {
+        String sql ="select * from board where bno="+bno;
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if( rs.next() ) {
+                BoardDto boardDto = new BoardDto(
+                        rs.getInt(1),rs.getString(2),
+                        rs.getString(3)
+                );
+                return boardDto;
+            }
+        }catch (Exception e) {
+
+        } return null;
+
+
+    }
+
+    public boolean update(int bno,String btitle,String bcontent){
+        try{
+            String sql ="update board set btitle="+btitle+", bcontent="+bcontent+" where bno="+bno;
+            ps= con.prepareStatement(sql);
+            ps.executeUpdate();
+            return true;
+        }
+        catch(Exception e){System.out.println(e);}
+        return false;
+    }
+
+    public boolean delete(int bno){
+        try{
+        String sql ="delete from board where bno="+bno;
+        ps= con.prepareStatement(sql);
+        ps.executeUpdate();
+        return true;
+        }
+        catch(Exception e){}
+        return false;
+    }
+
 //    private JdbcTemplate jdbcTemplate;
 //    public BoardDao (DataSource dataSource) {
 //        this.jdbcTemplate = new JdbcTemplate(dataSource);}

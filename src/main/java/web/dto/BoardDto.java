@@ -1,6 +1,7 @@
 package web.dto;
 
 public class BoardDto {
+
     private int bno;
     private String btitle;
     private String bcontent;

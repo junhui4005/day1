@@ -14,7 +14,7 @@
               <th>내용</th>
           </tr>
             <tr th:each="array:${list}">
-                <td>[[${array.getBtitle}]]</td>
+                <td><a th:href=" @{/view/{bno}(bno=${array.getBno()})}">[[${array.getBtitle}]]</a></td>
                 <td>[[${array.getBcontent}]]</td>
             </tr>
       </table>
