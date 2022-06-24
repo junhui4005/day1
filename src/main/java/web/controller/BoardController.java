@@ -23,7 +23,6 @@ public class BoardController {
     @GetMapping("/")
     public String main(Model model){
         model.addAttribute("list",boardService.getlist());
-        System.out.println(boardService.getlist());
         return "list";
     }
     @GetMapping("/write")
@@ -61,16 +60,12 @@ public class BoardController {
         return "view";
     }
 
-    @GetMapping("/delete/{bno}")
-    public String delete(@PathVariable("bno") int bno , Model model){
-        boolean result = boardService.delete(bno);
-        if(result){
+    @GetMapping("/delete")
+    public String delete( Model model){
+        int bno =  (Integer) request.getSession().getAttribute("bno");
+         boardService.delete(bno);
             model.addAttribute("list",boardService.getlist());
             return "list";
-        }
-        model.addAttribute("list",boardService.getlist());
-        return "list";
     }
-
 
 }
