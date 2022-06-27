@@ -1,5 +1,6 @@
 package web.controller;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,21 @@ public class BoardController {
     @Autowired
     BoardService boardService;
     @GetMapping("/")
-    public String main(Model model){
-        model.addAttribute("list",boardService.getlist());
+    public String main(){
         return "list";
     }
+
+    @PostMapping("/list")
+    @ResponseBody
+    public void list(HttpServletResponse response){
+        JSONObject json = boardService.getlist();
+        try {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().print(json);
+        }catch( Exception e ){ System.out.println( e );}
+    }
+
     @GetMapping("/write")
     public String write(){
         return "write";
@@ -36,19 +48,29 @@ public class BoardController {
     }
 
     @GetMapping("/view/{bno}")
-    public String view(@PathVariable("bno") int bno , Model model){
-        BoardDto boardDto = boardService.board(bno);
-        model.addAttribute("board",boardDto);
+    @ResponseBody
+    public void view(@PathVariable("bno") int bno , HttpServletResponse response ) { // @PathVariable("변수명")
+        try {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().print(boardService.board(bno));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    @GetMapping("/view/{bno}")
+    public String view( @PathVariable("bno") int bno ) {
         request.getSession().setAttribute("bno", bno);
-        return "view";
+        return "board/view";
     }
 
 
-    @PostMapping("/write")
-    public String write(@ModelAttribute BoardDto boardDto,Model model){
-       boardService.save(boardDto);
-        model.addAttribute("list",boardService.getlist());
-        return "list";
+        @PostMapping("/write")
+    @ResponseBody
+    public boolean write(BoardDto boardDto){
+       boolean result = boardService.save(boardDto);
+       return result;
     }
 
     @PostMapping("/update")
@@ -56,8 +78,7 @@ public class BoardController {
         int bno =  (Integer) request.getSession().getAttribute("bno");
         boardDto.setBno( bno );
         boardService.update(boardDto);
-        request.getSession().setAttribute("bno", bno);
-        return "view";
+        return "redirect:view/"+bno;
     }
 
     @GetMapping("/delete")

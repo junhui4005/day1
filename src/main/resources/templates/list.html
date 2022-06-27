@@ -8,15 +8,12 @@
     <div>
         <a href="/write"><button>글쓰기</button></a>
     </div>
-      <table>
-          <tr>
-              <th>제목</th>
-              <th>내용</th>
-          </tr>
-            <tr th:each="array:${list}">
-                <td><a th:href=" @{/view/{bno}(bno=${array.getBno()})}">[[${array.getBtitle}]]</a></td>
-                <td>[[${array.getBcontent}]]</td>
+      <table  id="listtable">
+            <tr>
             </tr>
       </table>
+
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="list.js"></script>
 </body>
 </html>

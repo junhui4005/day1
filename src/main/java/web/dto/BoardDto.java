@@ -1,5 +1,7 @@
 package web.dto;
 
+import web.domain.BoardEntity;
+
 public class BoardDto {
 
     private int bno;
@@ -46,5 +48,13 @@ public class BoardDto {
                 ", btitle='" + btitle + '\'' +
                 ", bcontent='" + bcontent + '\'' +
                 '}';
+    }
+
+    public BoardEntity toentity(){
+        return BoardEntity.builder()
+                .bno(this.bno)
+                .btitle(this.btitle)
+                .bcontent(this.bcontent)
+                .build();
     }
 }

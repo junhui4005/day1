@@ -5,10 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-  <form action="/write" method="post">
-        제목: <input type="text" name="btitle"><br>
-        내용: <input type="text" name="bcontent">
-        <button type="submit">작성</button>
+  <form id="save">
+        제목: <input type="text" id="btitle"><br>
+        내용: <input type="text" id="bcontent">
+        <button type="button" onclick="쓰기()">작성</button>
   </form>
+  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="write.js"></script>
 </body>
 </html>
