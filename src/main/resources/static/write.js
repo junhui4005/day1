@@ -1,5 +1,5 @@
 
-function 쓰기(){
+function save(){
     let form = $("#save")[0];
         let formdata = new FormData( form );
         $.ajax({

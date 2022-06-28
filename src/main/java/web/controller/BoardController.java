@@ -6,7 +6,6 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import web.dao.BoardDao;
 import web.dto.BoardDto;
 import web.service.BoardService;
 
@@ -47,9 +46,9 @@ public class BoardController {
         return "update";
     }
 
-    @GetMapping("/view/{bno}")
-    @ResponseBody
-    public void view(@PathVariable("bno") int bno , HttpServletResponse response ) { // @PathVariable("변수명")
+    @GetMapping("/getview")
+    public void view(HttpServletResponse response ) {
+        int bno =  (Integer) request.getSession().getAttribute("bno");
         try {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
@@ -62,7 +61,7 @@ public class BoardController {
     @GetMapping("/view/{bno}")
     public String view( @PathVariable("bno") int bno ) {
         request.getSession().setAttribute("bno", bno);
-        return "board/view";
+        return "boardview";
     }
 
 
@@ -74,6 +73,7 @@ public class BoardController {
     }
 
     @PostMapping("/update")
+    @ResponseBody
     public String update(@ModelAttribute BoardDto boardDto,Model model){
         int bno =  (Integer) request.getSession().getAttribute("bno");
         boardDto.setBno( bno );
@@ -82,6 +82,7 @@ public class BoardController {
     }
 
     @GetMapping("/delete")
+    @ResponseBody
     public String delete( Model model){
         int bno =  (Integer) request.getSession().getAttribute("bno");
          boardService.delete(bno);

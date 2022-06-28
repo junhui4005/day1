@@ -12,6 +12,7 @@ import web.dto.BoardDto;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BoardService {
@@ -26,11 +27,7 @@ public class BoardService {
     public boolean save(BoardDto board){
         BoardEntity boardEntity = board.toentity();
         boardRepository.save( boardEntity );
-        if(boardEntity.getBno()<1){
-            return false;
-        }else{
-            return true;
-        }
+        return boardEntity.getBno() >= 1;
     }
 
     public JSONObject getlist(){
@@ -48,8 +45,15 @@ public class BoardService {
         return object;
     }
 
-    public BoardDto board( int bno ) {
-        return boardDao.board(bno);
+    public JSONObject board( int bno ) {
+        Optional<BoardEntity> optional =  boardRepository.findById( bno );
+        BoardEntity entity = optional.get();
+
+        JSONObject object = new JSONObject();
+        object.put("bno" , entity.getBno() );
+        object.put("btitle" , entity.getBtitle() );
+        object.put("bcontent" , entity.getBcontent() );
+        return object;
     }
     public boolean delete(int bno){
         return boardDao.delete(bno);

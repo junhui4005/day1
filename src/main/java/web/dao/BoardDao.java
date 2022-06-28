@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 
-@Repository
+
 public class BoardDao{
 
     protected Connection con;
