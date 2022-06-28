@@ -61,7 +61,7 @@ public class BoardController {
     @GetMapping("/view/{bno}")
     public String view( @PathVariable("bno") int bno ) {
         request.getSession().setAttribute("bno", bno);
-        return "boardview";
+        return "boardviewview";
     }
 
 
